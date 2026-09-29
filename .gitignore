@@ -1,0 +1,17 @@
+# secrets
+.env
+.env.*
+
+# python
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+
+# shared data (transcripts, judgments, datasets) lives outside git
+data/
+
+# editor / os
+.vscode/
+.idea/
+Thumbs.db

@@ -1,0 +1,152 @@
+{
+  "game_id": "fx_mafia7",
+  "source": "fixtures",
+  "players": [
+    {
+      "id": "Player1",
+      "role": "bystander",
+      "team": "honest"
+    },
+    {
+      "id": "Player2",
+      "role": "mafioso",
+      "team": "deceptive"
+    },
+    {
+      "id": "Player3",
+      "role": "bystander",
+      "team": "honest"
+    },
+    {
+      "id": "Player4",
+      "role": "bystander",
+      "team": "honest"
+    },
+    {
+      "id": "Player5",
+      "role": "mafioso",
+      "team": "deceptive"
+    },
+    {
+      "id": "Player6",
+      "role": "bystander",
+      "team": "honest"
+    },
+    {
+      "id": "Player7",
+      "role": "bystander",
+      "team": "honest"
+    }
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "night": {
+        "kill": "Player7",
+        "extra": {
+          "info": [
+            "Mafia chose Player7"
+          ]
+        }
+      },
+      "public_events": [
+        "Player7 was found dead this morning."
+      ],
+      "statements": [
+        {
+          "player_id": "Player1",
+          "text": "hi all"
+        },
+        {
+          "player_id": "Player2",
+          "text": "so who do we think"
+        },
+        {
+          "player_id": "Player3",
+          "text": "no idea, anyone see anything?"
+        },
+        {
+          "player_id": "Player1",
+          "text": "player 2 you were first to talk last night lol"
+        },
+        {
+          "player_id": "Player2",
+          "text": "that means nothing"
+        },
+        {
+          "player_id": "Player4",
+          "text": "i vote we look at quiet ppl"
+        },
+        {
+          "player_id": "Player5",
+          "text": "agree with 4"
+        },
+        {
+          "player_id": "Player6",
+          "text": "5 agreeing fast is sus"
+        },
+        {
+          "player_id": "Player5",
+          "text": "lol ok"
+        }
+      ],
+      "eliminated": "Player6",
+      "votes": {
+        "Player1": "Player2",
+        "Player2": "Player6",
+        "Player3": "Player2",
+        "Player4": "Player6",
+        "Player5": "Player6",
+        "Player6": "Player5"
+      }
+    },
+    {
+      "round": 2,
+      "night": {
+        "kill": "Player1",
+        "extra": {
+          "info": [
+            "Mafia chose Player1"
+          ]
+        }
+      },
+      "public_events": [
+        "Player6 was voted out.",
+        "Player1 was found dead this morning."
+      ],
+      "statements": [
+        {
+          "player_id": "Player3",
+          "text": "1 accused 2 and died"
+        },
+        {
+          "player_id": "Player2",
+          "text": "coincidence"
+        },
+        {
+          "player_id": "Player4",
+          "text": "not buying it"
+        },
+        {
+          "player_id": "Player5",
+          "text": "3 is just guessing"
+        },
+        {
+          "player_id": "Player3",
+          "text": "voting 2"
+        }
+      ],
+      "eliminated": "Player2",
+      "votes": {
+        "Player2": "Player3",
+        "Player3": "Player2",
+        "Player4": "Player2",
+        "Player5": "Player3"
+      }
+    }
+  ],
+  "meta": {
+    "fixture": true,
+    "description": "Mafia-like chat: several short messages per player per day, night info rows"
+  }
+}

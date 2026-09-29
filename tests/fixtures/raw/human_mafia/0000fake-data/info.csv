@@ -1,0 +1,24 @@
+id,creation_time,property1,property2,property3,property4,property5,failed,time_of_death,details,type,origin_id,network_id,contents
+1,2020-01-01 10:01:00.000000,,,,,,f,,{},info,1,1,Phase Change to Nighttime
+2,2020-01-01 10:01:10.000000,,,,,,f,,{},text,2,1,Ann Alpha: who first
+3,2020-01-01 10:01:20.000000,,,,,,f,,{},text,6,1,Eve Epsilon: bob
+4,2020-01-01 10:01:30.000000,,,,,,f,,{},vote,2,1,Ann Alpha: Bob Beta
+5,2020-01-01 10:01:40.000000,,,,,,f,,{},vote,6,1,Eve Epsilon: Bob Beta
+6,2020-01-01 10:02:00.000000,,,,,,f,,{},info,1,1,Phase Change to Daytime: Victim - Bob Beta
+7,2020-01-01 10:02:00.050000,,,,,,f,,{},info,1,1,Phase Change to Daytime: Victim - Bob Beta
+8,2020-01-01 10:02:10.000000,,,,,,f,,{},text,4,1,Cat Gamma: poor bob. who did it?
+9,2020-01-01 10:02:20.000000,,,,,,f,,{},text,2,1,"Ann Alpha: no idea, i was asleep"
+10,2020-01-01 10:02:30.000000,,,,,,f,,{},text,5,1,Dan Delta: cat is asking a lot of questions
+11,2020-01-01 10:03:00.000000,,,,,,f,,{},vote,2,1,Ann Alpha: Dan Delta
+12,2020-01-01 10:03:10.000000,,,,,,f,,{},vote,2,1,Ann Alpha: Cat Gamma
+13,2020-01-01 10:03:20.000000,,,,,,f,,{},vote,5,1,Dan Delta: Cat Gamma
+14,2020-01-01 10:03:30.000000,,,,,,f,,{},vote,6,1,Eve Epsilon: Cat Gamma
+15,2020-01-01 10:05:00.000000,,,,,,f,,{},info,1,1,Phase Change to Nighttime: Victim - Cat Gamma
+16,2020-01-01 10:05:00.100000,,,,,,f,,{},info,1,1,Phase Change to Nighttime: Victim - Cat Gamma
+17,2020-01-01 10:05:30.000000,,,,,,f,,{},vote,2,1,Ann Alpha: Dan Delta
+18,2020-01-01 10:06:00.000000,,,,,,f,,{},info,1,1,Phase Change to Daytime: Victim - Cat Gamma
+19,2020-01-01 10:06:10.000000,,,,,,f,,{},text,5,1,Dan Delta: nobody died? eve has been quiet
+20,2020-01-01 10:06:20.000000,,,,,,f,,{},text,6,1,Eve Epsilon: I'm here: just thinking
+21,2020-01-01 10:06:30.000000,,,,,,f,,{},vote,5,1,Dan Delta: Eve Epsilon
+22,2020-01-01 10:06:40.000000,,,,,,f,,{},vote,2,1,Ann Alpha: Eve Epsilon
+23,2020-01-01 10:07:00.000000,,,,,,f,,{},info,1,1,Phase Change to Nighttime: Victim - Eve Epsilon

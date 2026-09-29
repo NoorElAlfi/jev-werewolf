@@ -1,0 +1,510 @@
+<title>Jev Werewolf Experiment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap">
+<style>
+:root{
+  --bg:#f4f5f9; --surface:#ffffff; --sunk:#eceef4; --ink:#171a2b; --ink-2:#464b62; --muted:#6c7189; --rule:#dcdfe9;
+  --accent:#3b3aa6; --accent-soft:#e6e5f7;
+  --jev:#2a78d6; --llm:#eb6834; --base:#8b8fa3;
+  --pos:#256abf; --neg:#d03b3b; --mid:#f0efec; --cell-ink-dark:#171a2b; --cell-ink-light:#ffffff;
+  --wolf:#b8323a; --seer:#2a78d6;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#10121c; --surface:#171a27; --sunk:#1d2131; --ink:#eceef7; --ink-2:#b7bbcf; --muted:#8c91a8; --rule:#2a2e41;
+    --accent:#a29df2; --accent-soft:#25264a;
+    --jev:#3987e5; --llm:#d95926; --base:#7f8499;
+    --pos:#3987e5; --neg:#e66767; --mid:#383835;
+    --wolf:#e66767; --seer:#3987e5;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#10121c; --surface:#171a27; --sunk:#1d2131; --ink:#eceef7; --ink-2:#b7bbcf; --muted:#8c91a8; --rule:#2a2e41;
+  --accent:#a29df2; --accent-soft:#25264a;
+  --jev:#3987e5; --llm:#d95926; --base:#7f8499;
+  --pos:#3987e5; --neg:#e66767; --mid:#383835;
+  --wolf:#e66767; --seer:#3987e5;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;margin:0}
+.wrap{max-width:1040px;margin:0 auto;padding-inline:20px;padding-block:0 64px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.12;margin:0}
+h1{font-size:clamp(2.3rem,6vw,3.9rem);font-weight:700;letter-spacing:-0.02em}
+h2{font-size:clamp(1.55rem,3.4vw,2.1rem);font-weight:700;letter-spacing:-0.01em}
+h3{font-size:1.12rem;font-weight:700}
+p{margin:0;max-width:68ch}
+.eyebrow{font-family:var(--mono);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.lede{font-size:1.2rem;color:var(--ink-2);max-width:60ch}
+a{color:var(--accent)}
+code,.mono{font-family:var(--mono);font-size:.86em}
+.num{font-variant-numeric:tabular-nums}
+
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--rule)}
+nav.toc .in{max-width:1040px;margin:0 auto;padding-inline:20px;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+nav.toc a{font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);text-decoration:none;padding:12px 10px;white-space:nowrap;border-bottom:2px solid transparent}
+nav.toc a:hover,nav.toc a:focus-visible{color:var(--ink);border-bottom-color:var(--accent);outline:none}
+
+header.hero{display:grid;grid-template-columns:1.35fr 1fr;gap:40px;align-items:center;padding-block:56px 40px}
+.hero .copy{display:grid;gap:18px}
+.table-card{background:var(--surface);border:1px solid var(--rule);border-radius:14px;padding:18px;display:grid;gap:12px}
+.table-card svg{width:100%;height:auto;display:block}
+.seg{display:inline-flex;border:1px solid var(--rule);border-radius:999px;padding:3px;gap:2px;background:var(--sunk);flex-wrap:wrap}
+.seg button{font:inherit;font-size:.86rem;border:0;background:transparent;color:var(--ink-2);padding:5px 12px;border-radius:999px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgb(0 0 0 / .12);font-weight:600}
+.seg button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.caption{font-size:.86rem;color:var(--muted)}
+
+section{padding-block:48px;border-top:1px solid var(--rule);display:grid;gap:22px;scroll-margin-top:48px}
+.findings{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.finding{display:grid;gap:8px;align-content:start;padding-top:14px;border-top:3px solid var(--ink)}
+.finding .big{font-family:var(--display);font-size:2.5rem;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.finding .big small{font-size:1.1rem;color:var(--muted);font-weight:500}
+.finding p{font-size:.98rem;color:var(--ink-2)}
+
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.judge{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:14px 16px;display:grid;gap:6px;align-content:start}
+.judge .top{display:flex;align-items:center;gap:8px;justify-content:space-between}
+.judge h3{font-family:var(--mono);font-size:.92rem;font-weight:500}
+.judge p{font-size:.93rem;color:var(--ink-2)}
+.chip{font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
+.chip.jev{color:var(--jev)} .chip.llm{color:var(--llm)} .chip.base{color:var(--muted)}
+
+.panel{background:var(--surface);border:1px solid var(--rule);border-radius:14px;padding:18px;display:grid;gap:14px}
+.controls{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center}
+.controls .lbl{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.chart{width:100%;overflow-x:auto}
+.chart svg{display:block;width:100%;height:auto;min-width:320px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.86rem;color:var(--ink-2)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:11px;height:11px;border-radius:50%;display:inline-block}
+.note{font-size:.95rem;color:var(--ink-2);max-width:72ch}
+.callout{border-left:3px solid var(--accent);padding:4px 0 4px 14px;color:var(--ink-2);max-width:72ch}
+
+.heat{border-collapse:separate;border-spacing:3px;font-variant-numeric:tabular-nums;width:100%;min-width:640px}
+.heat th{font-family:var(--mono);font-size:.72rem;font-weight:500;color:var(--muted);text-align:left;padding:4px 6px;letter-spacing:.03em}
+.heat th.src{text-align:center}
+.heat td{font-family:var(--mono);font-size:.82rem;text-align:center;padding:9px 4px;border-radius:5px;cursor:default}
+.heat td.sig{font-weight:500;box-shadow:inset 0 0 0 2px currentColor}
+.heat td.rowh{font-family:var(--mono);text-align:left;color:var(--ink);background:transparent;white-space:nowrap}
+.scale{display:flex;align-items:center;gap:10px;font-size:.82rem;color:var(--muted);flex-wrap:wrap}
+.scale .bar{height:10px;width:200px;max-width:50vw;border-radius:5px}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.mini{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
+.mini th,.mini td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--rule);font-size:.92rem}
+.mini th{font-family:var(--mono);font-size:.72rem;font-weight:500;color:var(--muted);letter-spacing:.04em}
+.mini td.v{font-family:var(--mono);font-size:.86rem}
+.list{display:grid;gap:12px;padding:0;margin:0;list-style:none;max-width:74ch}
+.list li{padding-left:18px;position:relative;color:var(--ink-2)}
+.list li::before{content:"";position:absolute;left:0;top:.7em;width:7px;height:7px;border-radius:50%;background:var(--accent)}
+.list b{color:var(--ink)}
+
+.tip{position:fixed;pointer-events:none;z-index:20;background:var(--ink);color:var(--bg);font-size:.82rem;line-height:1.4;padding:8px 10px;border-radius:8px;max-width:260px;opacity:0;transition:opacity .08s}
+.tip b{font-family:var(--mono);font-weight:500}
+details.tbl summary{cursor:pointer;font-size:.9rem;color:var(--accent)}
+details.tbl .scroll{overflow-x:auto;margin-top:10px}
+footer{padding-top:32px;border-top:1px solid var(--rule);font-size:.86rem;color:var(--muted);display:grid;gap:6px}
+
+@media (max-width:760px){
+  header.hero{grid-template-columns:1fr;padding-block:36px 28px}
+  .findings{grid-template-columns:1fr}
+  .grid2{grid-template-columns:1fr}
+  body{font-size:16px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<nav class="toc" aria-label="Sections"><div class="in">
+  <a href="#findings">Findings</a><a href="#setup">Setup</a><a href="#judges">Judges</a><a href="#overview">Overview</a><a href="#explorer">Explorer</a><a href="#live">Live games</a><a href="#stress">Stress tests</a><a href="#ablations">Ablations</a><a href="#cost">Cost</a><a href="#limits">Limits</a>
+</div></nav>
+
+<div class="wrap">
+<header class="hero">
+  <div class="copy">
+    <span class="eyebrow">Experiment report · September 2026</span>
+    <h1>Can Jev spot the wolf?</h1>
+    <p class="lede">We asked TypeSafe's Jev model to judge who is lying in games of Werewolf and Mafia, then compared it with random guessing, simple text baselines, and a local LLM. We tested it on games written by LLMs, on games played by people, and in live games where Jev's pick decides the vote.</p>
+    <p class="caption">Every number on this page comes from the experiment's report files (<code>reports/*.md</code>). Brackets are 95% confidence intervals from a bootstrap that resamples whole games.</p>
+  </div>
+  <figure class="table-card" style="margin:0">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+      <span class="eyebrow">One generated game</span>
+      <div class="seg" role="group" aria-label="Table view">
+        <button type="button" id="view-judge" aria-pressed="true">Judge's view</button>
+        <button type="button" id="view-truth" aria-pressed="false">Hidden roles</button>
+      </div>
+    </div>
+    <svg id="table" viewBox="0 0 300 300" role="img" aria-label="Nine players seated around a table"></svg>
+    <figcaption class="caption" id="table-cap">The judge sees only what was said in public. It scores every player who spoke.</figcaption>
+  </figure>
+</header>
+
+<section id="findings" aria-labelledby="h-find">
+  <span class="eyebrow">Headline results</span>
+  <h2 id="h-find">What we found</h2>
+  <div class="findings">
+    <div class="finding">
+      <div class="big num" id="f-live"></div>
+      <h3>Jev helps the village win</h3>
+      <p id="f-live-t"></p>
+    </div>
+    <div class="finding">
+      <div class="big num" id="f-auc"></div>
+      <h3>Reading a transcript cold is hard</h3>
+      <p id="f-auc-t"></p>
+    </div>
+    <div class="finding">
+      <div class="big num" id="f-cost"></div>
+      <h3>Cheap and fast</h3>
+      <p id="f-cost-t"></p>
+    </div>
+  </div>
+</section>
+
+<section id="setup" aria-labelledby="h-setup">
+  <span class="eyebrow">Setup</span>
+  <h2 id="h-setup">The game, the data, the score</h2>
+  <div class="cols">
+    <div class="judge"><h3 style="font-family:var(--display);font-size:1.05rem">The game</h3><p>Werewolf with 9 players: 2 wolves, 1 Seer, 6 villagers. Wolves kill at night; everyone talks and votes by day. The judge reads the public transcript up to the current round and gives each player a probability of being a wolf.</p></div>
+    <div class="judge"><h3 style="font-family:var(--display);font-size:1.05rem">The data</h3><p>200 games we generated with llama3.1:8b playing every seat, plus four outside datasets: human Mafia (44 games), GPT-4o Mafia (35), Avalon (20) and spoken Werewolf (191). Then 100 stress games with gpt-oss:20b wolves and 300 live games.</p></div>
+    <div class="judge"><h3 style="font-family:var(--display);font-size:1.05rem">The score</h3><p><b>AUC</b>: the chance a random wolf gets a higher score than a random villager. 0.5 is guessing, 1.0 is perfect. <b>ECE</b>: how far stated probabilities are from observed rates (lower is better). Each player in each round counts once.</p></div>
+  </div>
+</section>
+
+<section id="judges" aria-labelledby="h-judges">
+  <span class="eyebrow">Nine judges</span>
+  <h2 id="h-judges">Who we compared</h2>
+  <div class="cols" id="judge-cards"></div>
+</section>
+
+<section id="overview" aria-labelledby="h-over">
+  <span class="eyebrow">Every judge on every dataset</span>
+  <h2 id="h-over">Where anything beats chance</h2>
+  <p class="note">Each cell is a judge's AUC on one dataset. Blue is above chance, red is below. A ringed cell has a 95% interval that excludes 0.5; unringed cells can't be told apart from guessing.</p>
+  <div class="panel">
+    <div class="chart"><table class="heat" id="heat" aria-label="AUC by judge and dataset"></table></div>
+    <div class="scale"><span>0.30 below chance</span><span class="bar" id="scalebar"></span><span>0.70 above chance</span></div>
+  </div>
+  <p class="callout" id="over-note"></p>
+</section>
+
+<section id="explorer" aria-labelledby="h-exp">
+  <span class="eyebrow">Explore</span>
+  <h2 id="h-exp">Judge by judge</h2>
+  <div class="panel">
+    <div class="controls">
+      <span class="lbl">Dataset</span>
+      <div class="seg" role="group" aria-label="Dataset" id="src-seg"></div>
+    </div>
+    <div class="controls">
+      <span class="lbl">Measure</span>
+      <div class="seg" role="group" aria-label="Measure" id="metric-seg"></div>
+    </div>
+    <p class="caption" id="src-desc"></p>
+    <div class="legend"><span><i class="sw" style="background:var(--jev)"></i>Jev</span><span><i class="sw" style="background:var(--llm)"></i>Local LLM (llama3.1:8b)</span><span><i class="sw" style="border:2px solid var(--base)"></i>Baseline</span></div>
+    <div class="chart" id="dot"></div>
+    <details class="tbl"><summary>Show as a table</summary><div class="scroll"><table class="mini" id="dot-table"></table></div></details>
+  </div>
+</section>
+
+<section id="live" aria-labelledby="h-live">
+  <span class="eyebrow">Live games · 50 per condition</span>
+  <h2 id="h-live">When the judge picks who gets voted out</h2>
+  <p class="note">Every seat is llama3.1:8b. Each day the judge's top suspect is voted out. In the abstention variants the village skips the vote when Jev's confidence is below a threshold. Game <i>i</i> has the same seats and roles in every condition, so the comparisons are paired.</p>
+  <div class="panel">
+    <div class="legend"><span><i class="sw" style="background:var(--jev)"></i>Jev decides</span><span><i class="sw" style="background:var(--llm)"></i>llama decides</span><span><i class="sw" style="border:2px solid var(--base)"></i>Random votes</span></div>
+    <div class="chart" id="livechart"></div>
+    <details class="tbl"><summary>Show as a table</summary><div class="scroll"><table class="mini" id="live-table"></table></div></details>
+  </div>
+  <ul class="list" id="live-notes"></ul>
+</section>
+
+<section id="stress" aria-labelledby="h-stress">
+  <span class="eyebrow">Stress tests</span>
+  <h2 id="h-stress">Stronger liars turned out easier to catch</h2>
+  <p class="note">We replaced the wolves with gpt-oss:20b and kept llama3.1:8b for everyone else, on the same 100 seatings. Each line runs from the all-llama games to the gpt-oss-wolf games.</p>
+  <div class="panel">
+    <div class="legend"><span><i class="sw" style="border:2px solid var(--base)"></i>llama wolves</span><span><i class="sw" style="background:var(--accent)"></i>gpt-oss wolves</span></div>
+    <div class="chart" id="stresschart"></div>
+  </div>
+  <ul class="list" id="stress-notes"></ul>
+</section>
+
+<section id="ablations" aria-labelledby="h-abl">
+  <span class="eyebrow">Ablations · jev_batched on 200 + 60 games</span>
+  <h2 id="h-abl">What changes Jev's accuracy</h2>
+  <div class="grid2">
+    <div class="panel">
+      <h3>Criteria wording</h3>
+      <table class="mini" id="abl-crit"></table>
+      <p class="note">Criteria that mention "deflecting blame" make Jev worse. In these games villagers, not wolves, say "deflect" (7.1% vs 1.7% of statements).</p>
+    </div>
+    <div class="panel">
+      <h3>Including the accused player's defense</h3>
+      <table class="mini" id="abl-def"></table>
+      <p class="note">Leaving the defense out helps a little on both game sets. We didn't plan this comparison in advance, so it needs a confirming run.</p>
+    </div>
+  </div>
+</section>
+
+<section id="cost" aria-labelledby="h-cost">
+  <span class="eyebrow">Cost and speed · generated games</span>
+  <h2 id="h-cost">What a judgment costs</h2>
+  <div class="panel">
+    <div class="chart" id="costchart"></div>
+    <p class="caption">Mean seconds per round's view on the 200 generated games. Jev is an API call; llama runs on a local GPU and costs nothing per call.</p>
+    <details class="tbl"><summary>Show as a table</summary><div class="scroll"><table class="mini" id="cost-table"></table></div></details>
+  </div>
+</section>
+
+<section id="limits" aria-labelledby="h-lim">
+  <span class="eyebrow">Read with care</span>
+  <h2 id="h-lim">Limits and next steps</h2>
+  <ul class="list">
+    <li><b>No judge beats chance on human games.</b> Every positive result is on LLM-written text, and part of it is style (how a model writes) rather than lying.</li>
+    <li><b>Small samples.</b> 50 live games per condition leaves wide intervals. On the generated games, whether jev_batched beats random and length is close (p ≈ 0.06–0.07). About 250 more games would settle it.</li>
+    <li><b>Mixed-model games leak.</b> When wolves and villagers are different models, a length count alone gets AUC 0.61. A fair stronger-liar test needs every seat on the same model.</li>
+    <li><b>Not yet run:</b> a frontier Claude judge (built and tested, needs an API key; estimated $38–114). Also confirming runs for the no-defense gain and for adaptive wolves evading Jev.</li>
+  </ul>
+</section>
+
+<footer>
+  <span>Source files: reports/core.md, human.md, live.md, stress.md, ablations.md, richer_jev.md. Tests run offline.</span>
+  <span>AUC is per player-round. CIs: 95% percentile bootstrap resampling whole games.</span>
+</footer>
+</div>
+<div class="tip" id="tip" role="status" aria-live="polite"></div>
+
+<script>
+const D = {"auc":{"llm_llama31_8b":{"random":[0.502,0.482,0.521],"keyword":[0.488,0.462,0.513],"length":[0.503,0.492,0.514],"llama_judge":[0.403,0.37,0.437],"jev_isolated":[0.513,0.483,0.541],"jev_batched":[0.542,0.504,0.574],"jev_multidim":[0.706,0.68,0.73],"jev_noul":[0.449,0.416,0.482],"jev_pairwise":[0.545,0.525,0.566]},"human_mafia":{"random":[0.492,0.449,0.537],"keyword":[0.495,0.441,0.547],"length":[0.532,0.475,0.585],"llama_judge":[0.496,0.428,0.557],"jev_isolated":[0.48,0.42,0.533],"jev_batched":[0.451,0.386,0.503],"jev_multidim":[0.444,0.384,0.499],"jev_noul":[0.464,0.4,0.521],"jev_pairwise":[0.527,0.487,0.564]},"llm_mafia":{"random":[0.478,0.438,0.515],"keyword":[0.495,0.451,0.538],"length":[0.547,0.536,0.559],"llama_judge":[0.552,0.513,0.595],"jev_isolated":[0.609,0.56,0.658],"jev_batched":[0.64,0.607,0.677],"jev_multidim":[0.532,0.491,0.57],"jev_noul":[0.566,0.527,0.607],"jev_pairwise":[0.513,0.472,0.556]},"avalon":{"random":[0.533,0.474,0.587],"keyword":[0.54,0.479,0.602],"length":[0.488,0.459,0.516],"llama_judge":[0.533,0.477,0.582],"jev_isolated":[0.485,0.413,0.553],"jev_batched":[0.506,0.447,0.569],"jev_multidim":[0.517,0.442,0.589],"jev_noul":[0.608,0.548,0.666],"jev_pairwise":[0.385,0.325,0.442]},"werewolf_among_us":{"random":[0.51,0.465,0.556],"keyword":[0.526,0.484,0.568],"length":[0.461,0.423,0.499],"llama_judge":[0.491,0.451,0.535],"jev_isolated":[0.491,0.458,0.53],"jev_batched":[0.51,0.476,0.55],"jev_multidim":[0.524,0.488,0.563],"jev_noul":[0.547,0.511,0.584],"jev_pairwise":[0.466,0.426,0.505]},"pooled":{"random":[0.503,0.479,0.525],"keyword":[0.51,0.485,0.536],"length":[0.478,0.467,0.492],"llama_judge":[0.513,0.487,0.538],"jev_isolated":[0.524,0.501,0.546],"jev_batched":[0.532,0.508,0.555],"jev_multidim":[0.512,0.485,0.535],"jev_noul":[0.545,0.519,0.568],"jev_pairwise":[0.493,0.47,0.516]}},"ece":{"llm_llama31_8b":{"random":[0.307,0.296,0.32],"keyword":[0.136,0.12,0.153],"length":[0.183,0.178,0.188],"llama_judge":[0.346,0.323,0.367],"jev_isolated":[0.122,0.106,0.141],"jev_batched":[0.103,0.084,0.124],"jev_multidim":[0.112,0.103,0.121],"jev_noul":[0.121,0.107,0.139],"jev_pairwise":[0.191,0.186,0.197]},"human_mafia":{"random":[0.32,0.289,0.363],"keyword":[0.248,0.22,0.292],"length":[0.248,0.229,0.264],"llama_judge":[0.33,0.29,0.387],"jev_isolated":[0.224,0.182,0.27],"jev_batched":[0.195,0.166,0.234],"jev_multidim":[0.073,0.051,0.104],"jev_noul":[0.17,0.149,0.195],"jev_pairwise":[0.198,0.179,0.217]},"llm_mafia":{"random":[0.322,0.299,0.352],"keyword":[0.054,0.041,0.078],"length":[0.584,0.547,0.622],"llama_judge":[0.207,0.183,0.234],"jev_isolated":[0.14,0.122,0.162],"jev_batched":[0.053,0.042,0.069],"jev_multidim":[0.06,0.042,0.085],"jev_noul":[0.185,0.178,0.193],"jev_pairwise":[0.132,0.121,0.15]},"avalon":{"random":[0.279,0.251,0.326],"keyword":[0.179,0.162,0.216],"length":[0.23,0.211,0.258],"llama_judge":[0.285,0.253,0.328],"jev_isolated":[0.239,0.193,0.297],"jev_batched":[0.188,0.14,0.233],"jev_multidim":[0.135,0.124,0.155],"jev_noul":[0.077,0.062,0.102],"jev_pairwise":[0.304,0.254,0.362]},"werewolf_among_us":{"random":[0.301,0.269,0.331],"keyword":[0.136,0.116,0.163],"length":[0.133,0.115,0.163],"llama_judge":[0.35,0.327,0.383],"jev_isolated":[0.562,0.541,0.588],"jev_batched":[0.407,0.382,0.436],"jev_multidim":[0.07,0.046,0.099],"jev_noul":[0.226,0.205,0.248],"jev_pairwise":[0.116,0.088,0.147]},"pooled":{"random":[0.306,0.291,0.324],"keyword":[0.145,0.13,0.164],"length":[0.309,0.275,0.34],"llama_judge":[0.291,0.274,0.311],"jev_isolated":[0.296,0.271,0.323],"jev_batched":[0.199,0.179,0.226],"jev_multidim":[0.072,0.059,0.085],"jev_noul":[0.172,0.162,0.185],"jev_pairwise":[0.172,0.156,0.188]}},"cost":{"llm_llama31_8b":{"random":0.0,"keyword":0.0,"length":0.0,"llama_judge":0.0,"jev_isolated":0.0005,"jev_batched":0.0003,"jev_multidim":0.0008,"jev_noul":0.0003,"jev_pairwise":0.0009},"human_mafia":{"random":0.0,"keyword":0.0,"length":0.0,"llama_judge":0.0,"jev_isolated":0.0003,"jev_batched":0.0002,"jev_multidim":0.0005,"jev_noul":0.0002,"jev_pairwise":0.0006},"llm_mafia":{"random":0.0,"keyword":0.0,"length":0.0,"llama_judge":0.0,"jev_isolated":0.0035,"jev_batched":0.0025,"jev_multidim":0.003,"jev_noul":0.0025,"jev_pairwise":0.0032},"avalon":{"random":0.0,"keyword":0.0,"length":0.0,"llama_judge":0.0,"jev_isolated":0.0007,"jev_batched":0.0006,"jev_multidim":0.0011,"jev_noul":0.0006,"jev_pairwise":0.0011},"werewolf_among_us":{"random":0.0,"keyword":0.0,"length":0.0,"llama_judge":0.0,"jev_isolated":0.0002,"jev_batched":0.0002,"jev_multidim":0.0003,"jev_noul":0.0002,"jev_pairwise":0.0002},"pooled":{"random":0.0,"keyword":0.0,"length":0.0,"llama_judge":0.0,"jev_isolated":0.0007,"jev_batched":0.0005,"jev_multidim":0.0007,"jev_noul":0.0005,"jev_pairwise":0.0007}},"lat":{"llm_llama31_8b":{"random":0.0,"keyword":0.0,"length":0.0,"llama_judge":5.25,"jev_isolated":0.39,"jev_batched":0.2,"jev_multidim":0.23,"jev_noul":0.19,"jev_pairwise":0.22},"human_mafia":{"random":0.0,"keyword":0.0,"length":0.0,"llama_judge":4.72,"jev_isolated":0.32,"jev_batched":0.19,"jev_multidim":0.21,"jev_noul":0.19,"jev_pairwise":0.21},"llm_mafia":{"random":0.0,"keyword":0.02,"length":0.0,"llama_judge":39.56,"jev_isolated":0.49,"jev_batched":0.35,"jev_multidim":0.39,"jev_noul":0.34,"jev_pairwise":0.39},"avalon":{"random":0.0,"keyword":0.0,"length":0.0,"llama_judge":6.29,"jev_isolated":0.36,"jev_batched":0.2,"jev_multidim":0.23,"jev_noul":0.21,"jev_pairwise":0.22},"werewolf_among_us":{"random":0.0,"keyword":0.0,"length":0.0,"llama_judge":4.89,"jev_isolated":0.27,"jev_batched":0.2,"jev_multidim":0.22,"jev_noul":0.2,"jev_pairwise":0.2},"pooled":{"random":0.0,"keyword":0.01,"length":0.0,"llama_judge":12.64,"jev_isolated":0.34,"jev_batched":0.23,"jev_multidim":0.26,"jev_noul":0.23,"jev_pairwise":0.25}},"stress":{"random":{"gptoss":[0.516,0.486,0.548],"llama":[0.5,0.472,0.528],"diff":[0.016,-0.026,0.061]},"keyword":{"gptoss":[0.414,0.369,0.46],"llama":[0.485,0.448,0.52],"diff":[-0.071,-0.127,-0.014]},"length":{"gptoss":[0.609,0.595,0.623],"llama":[0.509,0.494,0.526],"diff":[0.1,0.08,0.117]},"llama_judge":{"gptoss":[0.408,0.362,0.451],"llama":[0.399,0.354,0.44],"diff":[0.009,-0.041,0.058]},"jev_isolated":{"gptoss":[0.667,0.634,0.698],"llama":[0.521,0.482,0.563],"diff":[0.146,0.092,0.199]},"jev_batched":{"gptoss":[0.648,0.611,0.682],"llama":[0.539,0.487,0.589],"diff":[0.109,0.049,0.165]}},"live":{"random":{"win":[24,12,36],"games":50,"wolves_out":[0.92,0.72,1.12],"no_elim":"0% [0, 0]","top_wolf":"n/a"},"llama":{"win":[12,4,22],"games":50,"wolves_out":[0.54,0.36,0.74],"no_elim":"0% [0, 0]","top_wolf":"16% [11, 22]"},"jev":{"win":[50,36,64],"games":50,"wolves_out":[1.26,1.02,1.5],"no_elim":"0% [0, 0]","top_wolf":"36% [30, 43]"},"jev_t028":{"win":[28,16,40],"games":50,"wolves_out":[0.9,0.68,1.12],"no_elim":"33% [24, 41]","top_wolf":"37% [30, 45]"},"jev_t042":{"win":[12,4,22],"games":50,"wolves_out":[0.6,0.42,0.78],"no_elim":"66% [59, 72]","top_wolf":"34% [26, 42]"},"jev_nodef":{"win":[44,30,58],"games":50,"wolves_out":[1.2,0.98,1.42],"no_elim":"0% [0, 0]","top_wolf":"34% [28, 41]"},"random (all 200)":{"win":[32,26,38],"games":200,"wolves_out":[1.01,0.9,1.12],"no_elim":"0% [0, 0]","top_wolf":"n/a"}},"abl":{"G":{"gen":"0.542 [0.506, 0.576]","leak":"0.505 [0.447, 0.561]"},"L":{"gen":"0.481 [0.446, 0.517]","leak":"0.461 [0.412, 0.513]"},"N":{"gen":"0.569 [0.536, 0.603]","leak":"0.555 [0.498, 0.609]"}}};
+const $ = s => document.querySelector(s);
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const NS = "http://www.w3.org/2000/svg";
+function el(tag, attrs = {}, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; }
+const f3 = x => x.toFixed(3);
+
+const JUDGES = [
+  ["random", "base", "Random", "A random score for every player. The floor."],
+  ["keyword", "base", "Keyword", "Counts suspicious words such as \"trust me\" or \"I swear\"."],
+  ["length", "base", "Length", "How much a player has said so far. Checks whether a signal is just talk volume."],
+  ["llama_judge", "llm", "llama3.1:8b", "A local 8B model reads the transcript and rates each player."],
+  ["jev_isolated", "jev", "Jev isolated", "One Jev Score per player, on that player's statements alone."],
+  ["jev_batched", "jev", "Jev batched", "One Jev call per round scores every speaker, from \"consistent and forthcoming\" to \"evasive or contradictory\"."],
+  ["jev_multidim", "jev", "Jev multidim", "Five scores per player: evasiveness, specificity, self-contradiction, accusation, contradicting events."],
+  ["jev_noul", "jev", "Jev noul", "A yes/no probability: \"Is this player concealing their true role?\""],
+  ["jev_pairwise", "jev", "Jev pairwise", "\"Is X protecting Y?\" for every pair, then who protects whom."],
+];
+const JMETA = Object.fromEntries(JUDGES.map(([k, g, n, d]) => [k, { g, n, d }]));
+const SOURCES = [
+  ["llm_llama31_8b", "Generated", "200 games · llama3.1:8b plays all 9 seats, random votes"],
+  ["llm_mafia", "GPT-4o Mafia", "35 games · GPT-4o agents (llm-mafia dataset)"],
+  ["human_mafia", "Human Mafia", "44 games · people playing text Mafia online"],
+  ["avalon", "Avalon", "20 games · human Avalon"],
+  ["werewolf_among_us", "Spoken Werewolf", "191 games · transcribed human Werewolf, one round each"],
+  ["pooled", "All human + GPT-4o", "The four outside datasets pooled"],
+];
+const SMETA = Object.fromEntries(SOURCES.map(([k, n, d]) => [k, { n, d }]));
+const groupColor = g => g === "jev" ? css("--jev") : g === "llm" ? css("--llm") : css("--base");
+
+// tooltip
+const tip = $("#tip");
+function showTip(html, ev) { tip.innerHTML = html; tip.style.opacity = 1; moveTip(ev); }
+function moveTip(ev) { const x = Math.min(ev.clientX + 14, innerWidth - tip.offsetWidth - 8); const y = Math.max(ev.clientY - tip.offsetHeight - 12, 8); tip.style.left = x + "px"; tip.style.top = y + "px"; }
+function hideTip() { tip.style.opacity = 0; }
+function hover(node, html) { node.addEventListener("pointerenter", e => showTip(html, e)); node.addEventListener("pointermove", moveTip); node.addEventListener("pointerleave", hideTip); }
+
+// ---------- hero table ----------
+const WOLVES = [2, 6], SEER = 4;
+let truth = false;
+function drawTable() {
+  const s = $("#table"); s.innerHTML = "";
+  el("circle", { cx: 150, cy: 150, r: 78, fill: css("--sunk"), stroke: css("--rule") }, s);
+  const t = el("text", { x: 150, y: 146, "text-anchor": "middle", fill: css("--muted"), "font-family": "IBM Plex Mono, monospace", "font-size": 10, "letter-spacing": "1" }, s);
+  t.textContent = truth ? "2 WOLVES · 1 SEER" : "DAY 1 · 9 SPEAKERS";
+  const t2 = el("text", { x: 150, y: 162, "text-anchor": "middle", fill: css("--muted"), "font-family": "IBM Plex Mono, monospace", "font-size": 10 }, s);
+  t2.textContent = truth ? "hidden from the judge" : "chance of a hit: 2/9";
+  for (let i = 0; i < 9; i++) {
+    const a = -Math.PI / 2 + i * 2 * Math.PI / 9, x = 150 + 115 * Math.cos(a), y = 150 + 115 * Math.sin(a);
+    const wolf = WOLVES.includes(i), seer = i === SEER;
+    const fill = truth ? (wolf ? css("--wolf") : seer ? css("--seer") : css("--surface")) : css("--surface");
+    const stroke = truth && (wolf || seer) ? fill : css("--ink-2");
+    el("circle", { cx: x, cy: y, r: 22, fill, stroke, "stroke-width": 1.5 }, s);
+    const lab = el("text", { x, y: y + 4, "text-anchor": "middle", "font-family": "IBM Plex Mono, monospace", "font-size": 11, fill: truth && (wolf || seer) ? "#ffffff" : css("--ink") }, s);
+    lab.textContent = truth ? (wolf ? "WOLF" : seer ? "SEER" : "P" + (i + 1)) : "P" + (i + 1);
+  }
+  $("#table-cap").textContent = truth ? "Wolves know each other and kill at night; the Seer checks one player each night. Roles are revealed only when a player dies." : "The judge sees only what was said in public. It scores every player who spoke.";
+}
+function setView(v) { truth = v; $("#view-judge").setAttribute("aria-pressed", String(!v)); $("#view-truth").setAttribute("aria-pressed", String(v)); drawTable(); }
+$("#view-judge").onclick = () => setView(false); $("#view-truth").onclick = () => setView(true);
+
+// ---------- findings ----------
+function findings() {
+  const L = D.live;
+  $("#f-live").innerHTML = `${L.jev.win[0]}%<small> vs ${L.random.win[0]}%</small>`;
+  $("#f-live-t").textContent = `Villagers win ${L.jev.win[0]}% [${L.jev.win[1]}, ${L.jev.win[2]}] of live games when Jev picks the vote, against ${L.random.win[0]}% [${L.random.win[1]}, ${L.random.win[2]}] with random votes and ${L.llama.win[0]}% when llama picks.`;
+  const a = D.auc.llm_llama31_8b.jev_batched, m = D.auc.llm_mafia.jev_batched;
+  $("#f-auc").innerHTML = `${f3(a[0])}<small> AUC</small>`;
+  $("#f-auc-t").textContent = `jev_batched on the 200 generated games, just above chance [${f3(a[1])}, ${f3(a[2])}]. It does better on GPT-4o Mafia (${f3(m[0])}). No judge beats chance on human games.`;
+  const c = D.cost.llm_llama31_8b.jev_batched, l = D.lat.llm_llama31_8b;
+  $("#f-cost").innerHTML = `$${c.toFixed(4)}<small> / game</small>`;
+  $("#f-cost-t").textContent = `jev_batched costs $${c.toFixed(4)} per game and takes ${l.jev_batched.toFixed(2)} s per round, against ${l.llama_judge.toFixed(2)} s for the local llama judge.`;
+}
+
+// ---------- judge cards ----------
+function judgeCards() {
+  const lab = { jev: "Jev", llm: "Local LLM", base: "Baseline" };
+  $("#judge-cards").innerHTML = JUDGES.map(([k, g, n, d]) => `<div class="judge"><div class="top"><h3>${k}</h3><span class="chip ${g}">${lab[g]}</span></div><p>${d}</p></div>`).join("");
+}
+
+// ---------- heatmap ----------
+function mix(a, b, t) { const p = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16)); const A = p(a), B = p(b); return "#" + A.map((v, i) => Math.round(v + (B[i] - v) * t).toString(16).padStart(2, "0")).join(""); }
+function lum(h) { const c = [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16) / 255).map(v => v <= .03928 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4); return .2126 * c[0] + .7152 * c[1] + .0722 * c[2]; }
+function cellColor(v) { const d = Math.max(-1, Math.min(1, (v - .5) / .2)); return mix(css("--mid"), d >= 0 ? css("--pos") : css("--neg"), Math.abs(d)); }
+function heat() {
+  const srcs = SOURCES.filter(s => s[0] !== "pooled");
+  let h = `<thead><tr><th>Judge</th>${srcs.map(s => `<th class="src">${s[1]}</th>`).join("")}</tr></thead><tbody>`;
+  for (const [k] of JUDGES) {
+    h += `<tr><td class="rowh">${k}</td>`;
+    for (const [s] of srcs) {
+      const v = D.auc[s][k], bg = cellColor(v[0]), ink = lum(bg) < .28 ? "#ffffff" : "#171a2b", sig = v[1] > .5 || v[2] < .5;
+      h += `<td class="${sig ? "sig" : ""}" style="background:${bg};color:${ink}" data-t="<b>${k}</b> on ${SMETA[s].n}<br>AUC ${f3(v[0])} [${f3(v[1])}, ${f3(v[2])}]<br>${sig ? (v[1] > .5 ? "Above chance" : "Below chance") : "Can't tell from chance"}">${v[0].toFixed(2)}</td>`;
+    }
+    h += "</tr>";
+  }
+  $("#heat").innerHTML = h + "</tbody>";
+  $("#heat").querySelectorAll("td[data-t]").forEach(td => hover(td, td.dataset.t));
+  $("#scalebar").style.background = `linear-gradient(90deg, ${css("--neg")}, ${css("--mid")}, ${css("--pos")})`;
+  const md = D.auc.llm_llama31_8b.jev_multidim;
+  $("#over-note").innerHTML = `jev_multidim's ${f3(md[0])} on the generated games is the best single number, but it comes from how llama3.1:8b plays a wolf (less specific, fewer accusations). The same judge is at chance or below on every human dataset. GPT-4o Mafia is the one outside dataset where Jev clearly works.`;
+}
+
+// ---------- dot + CI chart ----------
+let curSrc = "llm_llama31_8b", curMetric = "auc";
+const METRICS = {
+  auc: { n: "AUC", ci: true, ref: .5, refLabel: "chance 0.5", dom: [.3, .8], fmt: f3, better: "higher" },
+  ece: { n: "ECE (calibration error)", ci: true, ref: null, dom: [0, .45], fmt: f3, better: "lower" },
+};
+function seg(container, items, cur, onpick) {
+  container.innerHTML = "";
+  for (const [k, n] of items) { const b = document.createElement("button"); b.type = "button"; b.textContent = n; b.setAttribute("aria-pressed", String(k === cur)); b.onclick = () => onpick(k); container.appendChild(b); }
+}
+function dotChart(host, rows, opt) {
+  const W = Math.max(host.clientWidth, 340), rowH = 30, top = 26, left = Math.min(150, W * .34), right = 64, H = top + rows.length * rowH + 30;
+  const x = v => left + (v - opt.dom[0]) / (opt.dom[1] - opt.dom[0]) * (W - left - right);
+  const s = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": opt.aria });
+  const ticks = opt.ticks;
+  for (const t of ticks) {
+    el("line", { x1: x(t), x2: x(t), y1: top - 6, y2: H - 26, stroke: css("--rule"), "stroke-width": 1 }, s);
+    const tx = el("text", { x: x(t), y: H - 10, "text-anchor": "middle", "font-size": 11, fill: css("--muted"), "font-family": "IBM Plex Mono, monospace" }, s); tx.textContent = opt.tick(t);
+  }
+  if (opt.ref != null) {
+    el("line", { x1: x(opt.ref), x2: x(opt.ref), y1: top - 12, y2: H - 26, stroke: css("--ink-2"), "stroke-width": 1.5, "stroke-dasharray": "4 3" }, s);
+    const r = el("text", { x: x(opt.ref) + 5, y: top - 10, "font-size": 11, fill: css("--ink-2"), "font-family": "IBM Plex Mono, monospace" }, s); r.textContent = opt.refLabel;
+  }
+  rows.forEach((d, i) => {
+    const y = top + i * rowH + rowH / 2, c = d.color;
+    const g = el("g", {}, s);
+    el("rect", { x: 0, y: y - rowH / 2, width: W, height: rowH, fill: "transparent" }, g);
+    const lab = el("text", { x: left - 12, y: y + 4, "text-anchor": "end", "font-size": 12.5, fill: css("--ink"), "font-family": "IBM Plex Mono, monospace" }, g); lab.textContent = d.label;
+    if (d.ci) el("line", { x1: x(d.ci[0]), x2: x(d.ci[1]), y1: y, y2: y, stroke: c, "stroke-width": 2, "stroke-linecap": "round" }, g);
+    el("circle", { cx: x(d.v), cy: y, r: 5.5, fill: d.hollow ? css("--surface") : c, stroke: d.hollow ? c : css("--surface"), "stroke-width": 2 }, g);
+    const vt = el("text", { x: W - right + 10, y: y + 4, "font-size": 12, fill: css("--ink-2"), "font-family": "IBM Plex Mono, monospace" }, g); vt.textContent = opt.fmt(d.v);
+    hover(g, d.tip);
+  });
+  host.innerHTML = ""; host.appendChild(s);
+}
+function explorer() {
+  seg($("#src-seg"), SOURCES.map(s => [s[0], s[1]]), curSrc, k => { curSrc = k; explorer(); });
+  seg($("#metric-seg"), Object.entries(METRICS).map(([k, m]) => [k, m.n]), curMetric, k => { curMetric = k; explorer(); });
+  $("#src-desc").textContent = SMETA[curSrc].d + ". " + (METRICS[curMetric].better === "higher" ? "Higher is better." : "Lower is better.");
+  const M = METRICS[curMetric], tbl = D[curMetric][curSrc];
+  let rows = JUDGES.map(([k, g]) => { const v = tbl[k]; return { key: k, label: k, v: v[0], ci: [v[1], v[2]], color: groupColor(g), hollow: g === "base", tip: `<b>${k}</b><br>${M.n} ${f3(v[0])} [${f3(v[1])}, ${f3(v[2])}]` + (curMetric === "auc" ? `<br>${v[1] > .5 ? "Above chance" : v[2] < .5 ? "Below chance" : "Can't tell from chance"}` : "") }; });
+  rows.sort((a, b) => M.better === "higher" ? b.v - a.v : a.v - b.v);
+  const lo = Math.min(...rows.map(r => r.ci[0])), hi = Math.max(...rows.map(r => r.ci[1]));
+  const dom = curMetric === "auc" ? [Math.min(.3, Math.floor(lo * 20) / 20), Math.max(.8, Math.ceil(hi * 20) / 20)] : [0, Math.ceil(hi * 20) / 20];
+  const ticks = []; for (let t = dom[0]; t <= dom[1] + 1e-9; t += .1) ticks.push(+t.toFixed(2));
+  dotChart($("#dot"), rows, { dom, ticks, tick: t => t.toFixed(1), ref: M.ref, refLabel: M.refLabel, fmt: M.fmt, aria: `${M.n} by judge on ${SMETA[curSrc].n}` });
+  $("#dot-table").innerHTML = `<thead><tr><th>Judge</th><th>${M.n}</th><th>95% CI</th></tr></thead><tbody>` + rows.map(r => `<tr><td class="v">${r.key}</td><td class="v">${f3(r.v)}</td><td class="v">[${f3(r.ci[0])}, ${f3(r.ci[1])}]</td></tr>`).join("") + "</tbody>";
+}
+
+// ---------- live ----------
+const LIVE = [
+  ["jev", "jev", "Jev decides"],
+  ["jev_nodef", "jev", "Jev, no defense step"],
+  ["jev_t028", "jev", "Jev, abstain if conf < 0.28"],
+  ["jev_t042", "jev", "Jev, abstain if conf < 0.42"],
+  ["random", "base", "Random votes (same 50 seatings)"],
+  ["random (all 200)", "base", "Random votes (all 200 games)"],
+  ["llama", "llm", "llama3.1:8b decides"],
+];
+function live() {
+  const L = D.live;
+  const rows = LIVE.map(([k, g, n]) => { const w = L[k].win; return { key: k, label: k, v: w[0] / 100, ci: [w[1] / 100, w[2] / 100], color: groupColor(g), hollow: g === "base", tip: `<b>${n}</b><br>Villagers win ${w[0]}% [${w[1]}, ${w[2]}] of ${L[k].games} games<br>Wolves voted out per game: ${L[k].wolves_out[0]}` + (L[k].no_elim !== "0% [0, 0]" ? `<br>Days with no vote: ${L[k].no_elim}` : "") }; });
+  dotChart($("#livechart"), rows, { dom: [0, .7], ticks: [0, .1, .2, .3, .4, .5, .6, .7], tick: t => Math.round(t * 100) + "%", ref: L.random.win[0] / 100, refLabel: "random " + L.random.win[0] + "%", fmt: v => Math.round(v * 100) + "%", aria: "Villager win rate by who decides the vote" });
+  $("#live-table").innerHTML = `<thead><tr><th>Condition</th><th>Games</th><th>Villager win</th><th>Wolves out / game</th><th>Days with no vote</th></tr></thead><tbody>` + LIVE.map(([k, , n]) => { const r = L[k]; return `<tr><td>${n}</td><td class="v">${r.games}</td><td class="v">${r.win[0]}% [${r.win[1]}, ${r.win[2]}]</td><td class="v">${r.wolves_out[0].toFixed(2)}</td><td class="v">${r.no_elim}</td></tr>`; }).join("") + "</tbody>";
+  $("#live-notes").innerHTML = [
+    `<b>Jev beats random votes by +26 points</b> [+12, +40] on the same seatings, and votes out more wolves per game (${L.jev.wolves_out[0]} vs ${L.random.wolves_out[0]}).`,
+    `<b>llama is worse than useless.</b> It votes out fewer wolves than random (${L.llama.wolves_out[0]} per game) and loses to Jev by 38 points [22, 56].`,
+    `<b>Skipping votes hands the game to the wolves.</b> With abstention the village skips ${L.jev_t028.no_elim.split(" ")[0]} or ${L.jev_t042.no_elim.split(" ")[0]} of days, and the wolves keep killing each night.`,
+    `<b>The defense step doesn't matter here.</b> ${L.jev_nodef.win[0]}% without it vs ${L.jev.win[0]}% with it is inconclusive, and dropping it halves the Jev calls.`,
+  ].map(t => `<li>${t}</li>`).join("");
+}
+
+// ---------- stress ----------
+function stress() {
+  const S = D.stress, host = $("#stresschart");
+  const order = ["jev_isolated", "jev_batched", "length", "random", "llama_judge", "keyword"];
+  const W = Math.max(host.clientWidth, 340), rowH = 34, top = 26, left = Math.min(150, W * .34), right = 70, H = top + order.length * rowH + 30;
+  const dom = [.35, .75], x = v => left + (v - dom[0]) / (dom[1] - dom[0]) * (W - left - right);
+  const s = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "AUC with llama wolves versus gpt-oss wolves" });
+  for (let t = .4; t <= .75; t += .1) { el("line", { x1: x(t), x2: x(t), y1: top - 6, y2: H - 26, stroke: css("--rule") }, s); const tx = el("text", { x: x(t), y: H - 10, "text-anchor": "middle", "font-size": 11, fill: css("--muted"), "font-family": "IBM Plex Mono, monospace" }, s); tx.textContent = t.toFixed(1); }
+  el("line", { x1: x(.5), x2: x(.5), y1: top - 12, y2: H - 26, stroke: css("--ink-2"), "stroke-width": 1.5, "stroke-dasharray": "4 3" }, s);
+  const cl = el("text", { x: x(.5) + 5, y: top - 10, "font-size": 11, fill: css("--ink-2"), "font-family": "IBM Plex Mono, monospace" }, s); cl.textContent = "chance";
+  order.forEach((k, i) => {
+    const r = S[k], y = top + i * rowH + rowH / 2, a = r.llama[0], b = r.gptoss[0], g = el("g", {}, s);
+    el("rect", { x: 0, y: y - rowH / 2, width: W, height: rowH, fill: "transparent" }, g);
+    const lab = el("text", { x: left - 12, y: y + 4, "text-anchor": "end", "font-size": 12.5, fill: css("--ink"), "font-family": "IBM Plex Mono, monospace" }, g); lab.textContent = k;
+    el("line", { x1: x(a), x2: x(b), y1: y, y2: y, stroke: css("--muted"), "stroke-width": 2 }, g);
+    el("circle", { cx: x(a), cy: y, r: 5.5, fill: css("--surface"), stroke: css("--base"), "stroke-width": 2 }, g);
+    el("circle", { cx: x(b), cy: y, r: 6, fill: css("--accent"), stroke: css("--surface"), "stroke-width": 2 }, g);
+    const sig = r.diff[1] > 0 || r.diff[2] < 0;
+    const vt = el("text", { x: W - right + 10, y: y + 4, "font-size": 12, fill: css("--ink-2"), "font-family": "IBM Plex Mono, monospace" }, g); vt.textContent = (r.diff[0] >= 0 ? "+" : "") + r.diff[0].toFixed(3) + (sig ? "" : " ~");
+    hover(g, `<b>${k}</b><br>llama wolves ${f3(a)} [${f3(r.llama[1])}, ${f3(r.llama[2])}]<br>gpt-oss wolves ${f3(b)} [${f3(r.gptoss[1])}, ${f3(r.gptoss[2])}]<br>Change ${r.diff[0] >= 0 ? "+" : ""}${f3(r.diff[0])} [${f3(r.diff[1])}, ${f3(r.diff[2])}]${sig ? "" : " · inconclusive"}`);
+  });
+  host.innerHTML = ""; host.appendChild(s);
+  $("#stress-notes").innerHTML = [
+    `<b>Both Jev judges get better, not worse:</b> jev_isolated ${f3(S.jev_isolated.llama[0])} → ${f3(S.jev_isolated.gptoss[0])}, jev_batched ${f3(S.jev_batched.llama[0])} → ${f3(S.jev_batched.gptoss[0])}.`,
+    `<b>Much of that is style.</b> gpt-oss wolves write longer statements (253 vs 226 characters), so the length count alone jumps to ${f3(S.length.gptoss[0])}. Jev likely adds something beyond length, but we haven't tested that directly.`,
+    `<b>Adaptive wolves</b> saw their Jev score from the day before. Jev's AUC fell from 0.517 to 0.466 and villagers won 36% instead of 50%, but neither difference is conclusive at 50 games. "~" marks an inconclusive change.`,
+  ].map(t => `<li>${t}</li>`).join("");
+}
+
+// ---------- ablations (numbers from reports/ablations.md) ----------
+function ablations() {
+  const A = D.abl;
+  const row = (n, a, b) => `<tr><td>${n}</td><td class="v">${a}</td><td class="v">${b}</td></tr>`;
+  $("#abl-crit").innerHTML = `<thead><tr><th>Criteria</th><th>200 generic games</th><th>60 leaky games</th></tr></thead><tbody>${row("Generic", A.G.gen, A.G.leak)}${row("Mention deflecting blame", A.L.gen, A.L.leak)}</tbody>`;
+  $("#abl-def").innerHTML = `<thead><tr><th>Defense</th><th>200 generic games</th><th>60 leaky games</th></tr></thead><tbody>${row("Included", A.G.gen, A.G.leak)}${row("Left out", A.N.gen, A.N.leak)}</tbody>`;
+}
+
+// ---------- cost ----------
+function cost() {
+  const lat = D.lat.llm_llama31_8b, c = D.cost.llm_llama31_8b;
+  const ks = JUDGES.map(j => j[0]).filter(k => lat[k] > 0);
+  const rows = ks.map(k => ({ key: k, label: k, v: lat[k], ci: null, color: groupColor(JMETA[k].g), hollow: JMETA[k].g === "base", tip: `<b>${k}</b><br>${lat[k].toFixed(2)} s per round<br>$${c[k].toFixed(4)} per game` })).sort((a, b) => a.v - b.v);
+  dotChart($("#costchart"), rows, { dom: [0, 6], ticks: [0, 1, 2, 3, 4, 5, 6], tick: t => t + " s", ref: null, fmt: v => v.toFixed(2) + " s", aria: "Seconds per round by judge" });
+  $("#cost-table").innerHTML = `<thead><tr><th>Judge</th><th>Seconds per round</th><th>Cost per game</th></tr></thead><tbody>` + JUDGES.map(([k]) => `<tr><td class="v">${k}</td><td class="v">${lat[k].toFixed(2)}</td><td class="v">$${c[k].toFixed(4)}</td></tr>`).join("") + "</tbody>";
+}
+
+function renderAll() { drawTable(); findings(); judgeCards(); heat(); explorer(); live(); stress(); ablations(); cost(); }
+renderAll();
+let rt; addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => { explorer(); live(); stress(); cost(); }, 120); });
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", renderAll);
+new MutationObserver(renderAll).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+</script>

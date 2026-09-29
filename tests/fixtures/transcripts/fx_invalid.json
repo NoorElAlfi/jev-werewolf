@@ -1,0 +1,46 @@
+{
+  "game_id": "fx_invalid",
+  "source": "fixtures",
+  "players": [
+    {
+      "id": "Player1",
+      "role": "villager",
+      "team": "honest"
+    },
+    {
+      "id": "Player2",
+      "role": "werewolf",
+      "team": "evil"
+    },
+    {
+      "id": "Player1",
+      "role": "villager",
+      "team": "honest"
+    }
+  ],
+  "rounds": [
+    {
+      "round": 2,
+      "statements": [
+        {
+          "player_id": "Player9",
+          "text": "I'm not even in this game."
+        }
+      ],
+      "eliminated": "Player7"
+    },
+    {
+      "round": 1,
+      "statements": [
+        {
+          "player_id": "Player1",
+          "text": "Rounds go backwards here."
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "fixture": true,
+    "description": "deliberately invalid: bad team, duplicate id, unknown players, rounds out of order"
+  }
+}

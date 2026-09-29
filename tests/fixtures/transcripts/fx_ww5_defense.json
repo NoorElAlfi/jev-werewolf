@@ -1,0 +1,113 @@
+{
+  "game_id": "fx_ww5_defense",
+  "source": "fixtures",
+  "players": [
+    {
+      "id": "Player1",
+      "role": "villager",
+      "team": "honest"
+    },
+    {
+      "id": "Player2",
+      "role": "villager",
+      "team": "honest"
+    },
+    {
+      "id": "Player3",
+      "role": "werewolf",
+      "team": "deceptive"
+    },
+    {
+      "id": "Player4",
+      "role": "villager",
+      "team": "honest"
+    },
+    {
+      "id": "Player5",
+      "role": "villager",
+      "team": "honest"
+    }
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "night": {},
+      "public_events": [
+        "The game begins. 5 players are alive."
+      ],
+      "statements": [
+        {
+          "player_id": "Player1",
+          "text": "I was up late and heard nothing unusual."
+        },
+        {
+          "player_id": "Player2",
+          "text": "Player3 keeps agreeing with everyone, which feels like hiding."
+        },
+        {
+          "player_id": "Player3",
+          "text": "I'm just trying to be cooperative. Player2, you're awfully quick to accuse."
+        },
+        {
+          "player_id": "Player4",
+          "text": "No strong read yet."
+        },
+        {
+          "player_id": "Player5",
+          "text": "Player3's answer dodged the question."
+        }
+      ],
+      "defense": {
+        "player_id": "Player3",
+        "text": "Being agreeable isn't a crime. I shared what I know; Player2 has shared nothing concrete."
+      },
+      "eliminated": "Player2",
+      "votes": {
+        "Player1": "Player3",
+        "Player2": "Player3",
+        "Player3": "Player2",
+        "Player4": "Player2",
+        "Player5": "Player3"
+      }
+    },
+    {
+      "round": 2,
+      "night": {
+        "kill": "Player5"
+      },
+      "public_events": [
+        "Player2 was voted out. Player2 was a villager.",
+        "Player5 was killed in the night. Player5 was a villager."
+      ],
+      "statements": [
+        {
+          "player_id": "Player1",
+          "text": "Player5 suspected Player3 and died. That's telling."
+        },
+        {
+          "player_id": "Player3",
+          "text": "Or the wolf wants us to think that. Player4 has said almost nothing."
+        },
+        {
+          "player_id": "Player4",
+          "text": "I said little because I had little. Player3 has redirected twice now."
+        }
+      ],
+      "defense": {
+        "player_id": "Player3",
+        "text": "I'm redirecting because nobody has evidence against me, only feelings."
+      },
+      "eliminated": "Player3",
+      "votes": {
+        "Player1": "Player3",
+        "Player3": "Player4",
+        "Player4": "Player3"
+      }
+    }
+  ],
+  "winner": "villagers",
+  "meta": {
+    "fixture": true,
+    "description": "5 players, 1 wolf, a defense every round"
+  }
+}

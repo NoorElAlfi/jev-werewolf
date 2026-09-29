@@ -1,0 +1,7 @@
+[21:34:40] Game-Manager: Now it's Daytime for 3.5 minutes, everyone can communicate and see messages and votes.
+[21:38:29] Game-Manager: River was voted out. Their role was mafia. There are now 1 mafia players left.
+[21:38:29] Game-Manager: Now it's Nighttime for 2.0 minutes, only mafia can communicate and see messages and votes.
+[21:38:29] Game-Manager: There is only one mafia member left, so no need for discussion - cutting straight to voting!
+[21:38:37] Game-Manager: Adrian was voted out. Their role was bystander. There are now 1 mafia players left.
+[21:38:37] Game-Manager: Now it's Daytime for 3.5 minutes, everyone can communicate and see messages and votes.
+[21:42:19] Game-Manager: Stevie was voted out. Their role was mafia. There are now 0 mafia players left.

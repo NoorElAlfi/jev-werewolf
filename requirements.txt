@@ -1,0 +1,11 @@
+ollama
+typesafe-sdk
+python-dotenv
+numpy
+scipy
+scikit-learn
+matplotlib
+pytest
+filelock
+gymnasium
+anthropic

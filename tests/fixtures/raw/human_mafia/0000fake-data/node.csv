@@ -1,0 +1,7 @@
+id,creation_time,property1,property2,property3,property4,property5,failed,time_of_death,details,type,network_id,participant_id
+1,2020-01-01 10:00:00.000000,,,,,,f,,{},source,1,
+2,2020-01-01 10:00:01.000000,Ann Alpha,True,,,,t,2020-01-01 10:20:00.000000,{},mafioso,1,1
+3,2020-01-01 10:00:02.000000,Bob Beta,False,2020-01-01 10:02:00.100000,,,f,,{},bystander,1,2
+4,2020-01-01 10:00:03.000000,Cat Gamma,False,2020-01-01 10:05:00.200000,,,f,,{},bystander,1,3
+5,2020-01-01 10:00:04.000000,Dan Delta,True,,,,t,2020-01-01 10:20:00.000000,{},bystander,1,4
+6,2020-01-01 10:00:05.000000,Eve Epsilon,False,2020-01-01 10:07:00.300000,,,f,,{},mafioso,1,5

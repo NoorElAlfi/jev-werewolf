@@ -1,0 +1,136 @@
+{
+  "game_id": "fx_ww6_seer",
+  "source": "fixtures",
+  "players": [
+    {
+      "id": "Player1",
+      "role": "villager",
+      "team": "honest"
+    },
+    {
+      "id": "Player2",
+      "role": "werewolf",
+      "team": "deceptive"
+    },
+    {
+      "id": "Player3",
+      "role": "villager",
+      "team": "honest"
+    },
+    {
+      "id": "Player4",
+      "role": "seer",
+      "team": "honest"
+    },
+    {
+      "id": "Player5",
+      "role": "werewolf",
+      "team": "deceptive"
+    },
+    {
+      "id": "Player6",
+      "role": "villager",
+      "team": "honest"
+    }
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "night": {},
+      "public_events": [
+        "The game begins. 6 players are alive."
+      ],
+      "statements": [
+        {
+          "player_id": "Player1",
+          "text": "I don't have much to go on yet, but I'll be watching who stays quiet."
+        },
+        {
+          "player_id": "Player2",
+          "text": "Let's be careful not to rush. I'm just a regular villager trying to help."
+        },
+        {
+          "player_id": "Player3",
+          "text": "Player2 sounds rehearsed to me. Why announce being a regular villager?"
+        },
+        {
+          "player_id": "Player4",
+          "text": "I'd like to hear more from everyone before I point fingers."
+        },
+        {
+          "player_id": "Player5",
+          "text": "Honestly Player3 is the one pushing hard this early, that worries me."
+        },
+        {
+          "player_id": "Player6",
+          "text": "I agree we should hear more. Player5, why jump on Player3 so fast?"
+        }
+      ],
+      "eliminated": "Player3",
+      "votes": {
+        "Player1": "Player3",
+        "Player2": "Player3",
+        "Player3": "Player2",
+        "Player4": "Player5",
+        "Player5": "Player3",
+        "Player6": "Player5"
+      }
+    },
+    {
+      "round": 2,
+      "night": {
+        "kill": "Player1",
+        "seer_check": {
+          "seer": "Player4",
+          "target": "Player5",
+          "result": "deceptive"
+        }
+      },
+      "public_events": [
+        "Player3 was voted out. Player3 was a villager.",
+        "Player1 was killed in the night. Player1 was a villager."
+      ],
+      "statements": [
+        {
+          "player_id": "Player2",
+          "text": "Losing Player1 hurts. I think Player6 has been oddly quiet about who to trust."
+        },
+        {
+          "player_id": "Player4",
+          "text": "I'm the Seer. Last night I checked Player5 and they are on the wolves' side."
+        },
+        {
+          "player_id": "Player5",
+          "text": "That's a convenient claim. Anyone can say they're the Seer."
+        },
+        {
+          "player_id": "Player6",
+          "text": "Player4's claim fits how hard Player5 pushed yesterday. I'm voting Player5."
+        }
+      ],
+      "eliminated": "Player5",
+      "votes": {
+        "Player2": "Player6",
+        "Player4": "Player5",
+        "Player5": "Player4",
+        "Player6": "Player5"
+      }
+    },
+    {
+      "round": 3,
+      "night": {
+        "kill": "Player4"
+      },
+      "public_events": [
+        "Player5 was voted out. Player5 was a werewolf.",
+        "Player4 was killed in the night. Player4 was a seer."
+      ],
+      "statements": []
+    }
+  ],
+  "winner": "werewolves",
+  "meta": {
+    "fixture": true,
+    "description": "6 players, 2 wolves, night kills, a Seer who reveals"
+  }
+}

@@ -1,0 +1,31 @@
+{
+ "Game2": {
+  "startTime": "00:04:25",
+  "endTime": "00:08:50",
+  "playerNames": [
+   "Justin",
+   "Alvin",
+   "James",
+   "Mitchell"
+  ],
+  "votingOutcome": [
+   2,
+   2,
+   0,
+   2
+  ],
+  "startRoles": [
+   "Werewolf",
+   "Robber",
+   "Villager",
+   "Villager"
+  ],
+  "endRoles": [
+   "Werewolf",
+   "Villager",
+   "Robber",
+   "Villager"
+  ],
+  "warning": "N/A"
+ }
+}

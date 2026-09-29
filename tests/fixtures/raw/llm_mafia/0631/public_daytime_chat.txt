@@ -1,0 +1,31 @@
+[21:34:42] River: hey everyone, let's try to make some sense of this. anyone have any gut feelings or suspicions about who might be mafia? we need to make our votes count this round
+[21:34:43] Ronny: hey everyone! so, does anyone have any ideas or suspicions on who the mafia might be? let's try to get some good leads to work with. remember, our goal is to pick out the mafia carefully without losing too many bystanders
+[21:34:43] Tyler: hey everyone! so, thoughts on who might be stirring up some sneaky business this round? let's hear some ideas and see if we can nab us a mafia player before they make another move
+[21:38:10] Game-Manager: Daytime has ended, now it's time to vote! Waiting for all players to vote...
+[21:38:17] Game-Manager: Noah voted for River
+[21:38:18] Game-Manager: Whitney voted for River
+[21:38:18] Game-Manager: Tyler voted for River
+[21:38:18] Game-Manager: Elliot voted for Adrian
+[21:38:19] Game-Manager: Ronny voted for River
+[21:38:19] Game-Manager: River voted for Adrian
+[21:38:19] Game-Manager: Brook voted for River
+[21:38:23] Game-Manager: Adrian voted for River
+[21:38:27] Game-Manager: Stevie voted for Adrian
+[21:38:29] Game-Manager: Alex voted for River
+[21:38:42] Whitney: great teamwork, everyone! 🎉 we're down to one mafia member now. i think we've done a solid job narrowing things down with our observations. with adrian gone, we need to stay sharp and keep our focus on subtle patterns we might have noticed but haven't fully explored yet. has anyone observed any behaviors that felt off or seen any alliances that seem too cozy from the last round? let's pool our insights together and hopefully catch the last mafia member! keep those observations flowing, team. we've got this
+[21:38:42] Stevie: hey everyone, wow, what an intense round last time! with river out and adrian being a bystander, it's clear we're narrowing things down. let's keep up the teamwork and sharp observations—every vote counts more than ever now. has anyone noticed anything standout or peculiar in this round so far? i'm eager to hear everyone's insights and see if we can spot anything off together! keep those thoughts flowing so we can make a strong, collective decision. teamwork is our best weapon, let's get it
+[21:38:43] Alex: hey team! wow, we really nailed it last round by getting river out as mafia, awesome teamwork! 🎉 now we're down to just one sneaky mafia among us. let's keep up the momentum and figure out who this last mafia might be. i'm curious about the votes that were split between adrian and river—especially since adrian turned out to be a bystander. maybe we should take a closer look at who pushed the vote towards adrian and see if there's any suspicious behavior or alliances forming. we need to keep our focus sharp and ensure we make a well-informed decision this round. let’s hear everyone’s thoughts and continue piecing this together! keep those insights coming, team
+[21:39:58] Noah: hey team! 🎉 we're getting closer to the finish line with just one mafia left. since we caught river, let's really analyze the voting patterns and behavior from the last round, especially those votes for adrian—it might give us clues about lingering alliances or distractions. 
+
+stevie and elliot, your votes for adrian could hold some insights into the undercurrents of the last round—anything specific that swayed you? also, let's not overlook anyone who's been subtly agreeable without adding much substance or those who might've used humor to deflect and blend in.
+
+if anyone else noticed any other behaviors or interactions that seemed strategic or too comfortable, now’s the time to bring them up. every detail counts. let's connect these dots and catch that last sneaky mafia as a team! keep those sharp insights coming! 💪
+[21:42:07] Game-Manager: Daytime has ended, now it's time to vote! Waiting for all players to vote...
+[21:42:07] Game-Manager: Elliot voted for Alex
+[21:42:07] Game-Manager: Ronny voted for Stevie
+[21:42:14] Game-Manager: Alex voted for Stevie
+[21:42:15] Game-Manager: Whitney voted for Stevie
+[21:42:18] Game-Manager: Stevie voted for Ronny
+[21:42:18] Game-Manager: Brook voted for Stevie
+[21:42:19] Game-Manager: Noah voted for Stevie
+[21:42:19] Game-Manager: Tyler voted for Stevie

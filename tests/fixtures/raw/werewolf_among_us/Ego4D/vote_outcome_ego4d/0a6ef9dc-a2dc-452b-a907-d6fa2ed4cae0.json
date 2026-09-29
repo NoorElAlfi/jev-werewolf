@@ -1,0 +1,33 @@
+{
+ "Game1": {
+  "playerNames": [
+   "Erin",
+   "Sebastian",
+   "Jack",
+   "Brent",
+   "Hailey"
+  ],
+  "votingOutcome": [
+   2,
+   1,
+   "NA",
+   1,
+   2
+  ],
+  "startRoles": [
+   "Werewolf",
+   "Robber",
+   "Moderator",
+   "Seer",
+   "Troublemaker"
+  ],
+  "endRoles": [
+   "Robber",
+   "Seer",
+   "Moderator",
+   "Werewolf",
+   "Troublemaker"
+  ],
+  "warning": "Jack is the moderator and so did not vote"
+ }
+}
